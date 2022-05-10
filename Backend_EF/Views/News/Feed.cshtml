@@ -1,0 +1,93 @@
+﻿@using Backend_EF.Handlers;
+@using Backend_EF.Models;
+@using Backend_EF.AppContext;
+@using Microsoft.EntityFrameworkCore;
+@{
+    Layout = "~/Views/Shared/_LayoutNews.cshtml";
+    BindContext bindContext = new(new DbContextOptions<BindContext>());
+    NewsContext groupsContext = new(new DbContextOptions<NewsContext>());
+    List<object> listOfGroupNames = NewsHandler.GetNewsPartList("GroupName");
+    List<object> listOfBodies = NewsHandler.GetNewsPartList("Body");
+    List<object> listOfPostIDs = NewsHandler.GetNewsPartList("PostID");
+    List<object> listOfIDs = NewsHandler.GetNewsPartList("ID");
+    List<object> listOfLikes = NewsHandler.GetNewsPartList("Likes");
+    List<object> listOfGroupIDs = GroupsHandler.GetGroupsPartList("ID");
+    int rowsCount = NewsHandler.GetRowsCount();
+}
+
+@model NewsModel
+
+<a asp-controller="News" asp-action="CreatePost" class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-light-1 u-radius-17 u-btn-1 u-border-none u-btn u-btn-round u-button-style u-custom-color-5 u-hover-palette-1-dark-1 u-radius-13 u-btn-1">Create post</a>
+<section class="u-clearfix u-grey-5 u-section-1" id="sec-0d62">
+    @{
+        for (int i = 0; i < rowsCount; i++)
+        {
+            Guid userID = Model.UserID;
+            Guid PostID = new(listOfPostIDs[i].ToString());
+            Guid ID = new Guid(listOfIDs[i].ToString());
+            Guid groupID = new(listOfGroupIDs[i].ToString());
+            string GroupName = listOfGroupNames[i].ToString();
+            string Body = listOfBodies[i].ToString();
+            int likes = (int)listOfLikes[i];
+            var bindID = bindContext.Binds.Any(x => x.GroupID == groupID && x.PostID == PostID)
+            ? bindContext.Binds.FirstOrDefault(x => x.GroupID == groupID && x.PostID == PostID).ID : new();
+
+
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <p class="u-text u-text-default u-text-1">
+                    <form asp-controller="Groups" asp-action="GroupFeed" method="post">
+                        <p class="u-text u-text-default u-text-1">
+                            <strong>
+                                <input type="submit" value="@listOfGroupNames[i]" />
+                                <input type="hidden" name="groupID" value="@groupID" />
+                            </strong>
+                        </p>
+                    </form>
+                </p>
+                <p class="u-text u-text-default u-text-2">
+                    @listOfBodies[i].ToString()
+                </p>
+                @{
+                    if (NewsHandler.IsExist(Model.UserID))
+                    {
+                        <form asp-controller="News" asp-action="LikePost" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-hover-white u-none u-radius-13 u-text-black u-text-hover-white u-btn-1">
+                            <input type="hidden" asp-for="PostID" value="@PostID">
+                            <input type="hidden" asp-for="Likes" value="@likes">
+                            <input type="hidden" asp-for="GroupName" value="@GroupName">
+                            <input type="hidden" asp-for="Body" value="@Body">
+                            <input type="hidden" asp-for="UserID" value="@userID">
+                            <input type="hidden" asp-for="ID" value="@ID">
+                            <input type="hidden" asp-for="BindID" value="@bindID" />
+                            <input class="u-file-icon u-icon u-icon-1" src="~/images/heart.png" type="image" style="height: 16px; width: 16px;">
+                        </form>
+                        <form asp-controller="News" asp-action="DeletePost" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-hover-white u-none u-radius-13 u-text-black u-text-hover-white u-btn-1">
+                            <input type="hidden" asp-for="PostID" value="@PostID">
+                            <input type="hidden" asp-for="Likes" value="@likes">
+                            <input type="hidden" asp-for="GroupName" value="@GroupName">
+                            <input type="hidden" asp-for="Body" value="@Body">
+                            <input type="hidden" asp-for="UserID" value="@userID">
+                            <input type="hidden" asp-for="ID" value="@ID">
+                            <input type="hidden" asp-for="BindID" value="@bindID" />
+                            <input class="u-file-icon u-icon u-text u-text-default u-text-3" src="~/images/delete-24.ico" type="image" style="height: 16px; width: 16px;">
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="News" asp-action="LikePost" class="u-border-2 u-border-black u-border-hover-black u-btn u-btn-round u-button-style u-hover-white u-none u-radius-13 u-text-black u-text-hover-white u-btn-1">
+                            <input type="hidden" asp-for="PostID" value="@PostID">
+                            <input type="hidden" asp-for="Likes" value="@likes">
+                            <input type="hidden" asp-for="GroupName" value="@GroupName">
+                            <input type="hidden" asp-for="Body" value="@Body">
+                            <input type="hidden" asp-for="UserID" value="@userID">
+                            <input type="hidden" asp-for="ID" value="@ID">
+                            <input type="hidden" asp-for="BindID" value="@bindID" />
+                            <input class="u-file-icon u-icon u-icon-1" src="~/images/heart.png" type="image" style="height: 16px; width: 16px;">
+                        </form>
+                    }
+                }
+
+                <p id="likes" class="u-text u-text-default u-text-3">Likes: @listOfLikes[i]</p>
+            </div>
+        }
+    }
+</section>

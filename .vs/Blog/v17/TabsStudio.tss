@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\ViewModels\ApplicationContext.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\HtmlHelpers\NoteHandler.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\ViewModels\NoteModel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Program.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Controllers\NotesController.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Data_Blog_EF\Data_Blog_EF\SQLQuery1.sql</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Data_Blog_EF\Data_Blog_EF\InitDB.sql</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Views\Notes\Index.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Views\Notes\EditNote.cshtml</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\Blog\Backend_EF\Views\Notes\CreateNote.cshtml</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

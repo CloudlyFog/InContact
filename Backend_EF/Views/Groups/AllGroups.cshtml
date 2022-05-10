@@ -1,0 +1,73 @@
+﻿@using Backend_EF.Models;
+@using Backend_EF.AppContext;
+@using Microsoft.EntityFrameworkCore;
+@using Backend_EF.Handlers;
+@{
+    Layout = "~/Views/Shared/_LayoutGroups.cshtml";
+    GroupsContext context = new(new DbContextOptions<GroupsContext>());
+    int rowsCount = GroupsHandler.GetRowsCount();
+    var listOfGroupNames = GroupsHandler.GetGroupsPartList("Name");
+    var listOfGroupIDs = GroupsHandler.GetGroupsPartList("ID");
+    var listOfGroupDescriptions = GroupsHandler.GetGroupsPartList("Description");
+}
+@model GroupModel
+
+<section class="u-clearfix u-grey-5 u-section-1" id="sec-0d62">
+    @{
+
+        for (int i = 0; i < rowsCount; i++)
+        {
+
+            <div class="u-clearfix u-sheet u-sheet-1">
+                <form asp-controller="Groups" asp-action="Join" method="post" class="u-clearfix u-form-custom-backend u-form-spacing-35 u-form-vertical u-inner-form" source="custom" name="login" style="padding: 10px;">
+                    <p class="u-text u-text-default u-text-1">
+                        <strong>
+                            @listOfGroupNames[i]
+                            @{
+                                if (context.GroupsMembers.Any(member => member.UserID == Model.UserID && member.GroupID == new Guid(listOfGroupIDs[i].ToString())))
+                                {
+                                    <input type="submit" value="Leave">
+                                }
+                                else
+                                {
+                                    <input type="submit" value="Join">
+                                }
+                            }
+                        </strong>
+                    </p>
+                    <input type="hidden" name="GroupID" value="@listOfGroupIDs[i]">
+                    @{
+                        //here we get model GroupMembers from database and if it isn't null we'll get its field ID else returns new Guid()
+                        var groupMemberID = context.GroupsMembers.FirstOrDefault(member => member.GroupID == new Guid(listOfGroupIDs[i].ToString())) is not null ? context.GroupsMembers.FirstOrDefault(member => member.GroupID == new Guid(listOfGroupIDs[i].ToString())).ID : new();
+                    }
+                    <input type="hidden" name="groupMemberID" value="@groupMemberID">
+                </form>
+                @{
+                    if (context.IsUserOwnerGroup(Model.UserID, new Guid(listOfGroupIDs[i].ToString())))
+                    {
+                        <form asp-controller="Groups" asp-action="DeleteGroup" method="post" class="u-clearfix u-form-custom-backend u-form-spacing-35 u-form-vertical u-inner-form" source="custom" name="login" style="padding: 10px;">
+                            <p class="u-text u-text-default u-text-1">
+                                <input type="submit" value="Delete">
+                            </p>
+                            @{
+                                string Name = listOfGroupNames[i].ToString();
+                                string Description = listOfGroupDescriptions[i].ToString();
+                                Guid ID = new(listOfGroupIDs[i].ToString());
+                                Guid nodeOwnerID = context.GroupsNodeOwner.FirstOrDefault(node => node.OwnerID == Model.UserID && node.GroupID == ID).ID;
+                            }
+
+                            <input type="hidden" name="Name" value="@Name" />
+                            <input type="hidden" name="Description" value="@Description" />
+                            <input type="hidden" name="ID" value="@ID" />
+                            <input type="hidden" name="nodeOwnerID" value="@nodeOwnerID" />
+                        </form>
+                    }
+                }
+                <p class="u-text u-text-default u-text-1">
+                    <strong>Description</strong><br>
+                    @listOfGroupDescriptions[i]
+                </p>
+            </div>
+        }
+    }
+</section>

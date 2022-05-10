@@ -1,0 +1,54 @@
+﻿@using Backend_EF.Handlers;
+@using Microsoft.EntityFrameworkCore;
+@using Backend_EF.AppContext;
+
+@{
+    Layout = "~/Views/Shared/_LayoutCreate.cshtml";
+    NewsContext context = new(new DbContextOptions<NewsContext>());
+    GroupsContext Groupcontext = new(new DbContextOptions<GroupsContext>());
+
+    Model.GroupName = Groupcontext.Groupsdata.FirstOrDefault(group => group.UserID == Model.UserID) is not null ?
+        Groupcontext.Groupsdata.FirstOrDefault(group => group.UserID == Model.UserID).Name : string.Empty;
+
+}
+@model NewsModel
+
+<title>Create Post</title>
+
+<section class="u-clearfix u-palette-1-light-3 u-section-1" id="carousel_295a">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-expanded-width-lg u-expanded-width-sm u-shape u-shape-svg u-text-palette-1-light-1 u-shape-1">
+            <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 150" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-1073"></use></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 160 150" x="0px" y="0px" id="svg-1073"><path d="M43.2,126.9c14.2,1.3,27.6,7,39.1,15.6c8.3,6.1,19.4,10.3,32.7,5.3c11.7-4.4,18.6-17.4,21-30.2c2.6-13.3,8.1-25.9,15.7-37.1
+	c8.3-12.1,10.8-27.9,5.3-42.7C150.5,20.3,134.6,9,117,7.6C107.9,6.9,98.8,5,90.1,1.9C83-0.6,75-0.7,67.4,2.1
+	c-9.9,3.7-17,11.6-20.1,21c-3.3,10.1-10.9,18-20.6,22.2c-0.1,0-0.1,0.1-0.2,0.1c-20.3,8.9-31,32-24.6,53.2
+	C6.9,115.6,25.2,125.2,43.2,126.9z"></path></svg>
+        </div>
+        <div class="u-align-left u-image u-image-circle u-preserve-proportions u-image-1" data-image-width="616" data-image-height="616"></div>
+        <div class="u-palette-1-light-2 u-shape u-shape-circle u-shape-2"></div>
+        <div class="u-form u-radius-10 u-white u-form-1">
+            <form asp-controller="News" asp-action="CreatePost" method="post" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 28px;">
+                <div class="u-form-email u-form-group">
+                    <label for="email-4c18" class="u-label">GroupName</label>
+                    <input asp-for="GroupName" value="@Model.GroupName" readonly type="text" placeholder="Enter a group's name" id="email-4c18" class="u-border-2 u-border-palette-1-light-2 u-input u-input-rectangle u-palette-1-light-3 u-radius-10" required="">
+                </div>
+                <div class="u-form-group u-form-message">
+                    <label for="message-4c18" class="u-label">Body</label>
+                    <textarea asp-for="Body" placeholder="Enter post's body" rows="4" cols="50" id="message-4c18" class="u-border-2 u-border-palette-1-light-2 u-input u-input-rectangle u-palette-1-light-3 u-radius-10" required=""></textarea>
+                </div>
+                <div class="u-form-agree u-form-group u-form-group-3">
+                    <input type="checkbox" id="agree-a472" name="agree" class="u-agree-checkbox" required="">
+                    <label for="agree-a472" class="u-label">
+                        I accept the <a asp-controller="Account" asp-action="Privacy">Terms of Service</a>
+                    </label>
+                </div>
+                <div class="u-align-right u-form-group u-form-submit">
+                    <input type="submit" value="Create" class="u-active-palette-1-light-1 u-border-2 u-border-active-palette-1-light-1 u-border-hover-palette-1-light-1 u-border-palette-1-base u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-10 u-btn-1">
+                    <input type="hidden" name="groupName" value="@Model.GroupName" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>

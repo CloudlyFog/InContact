@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "d11e6bfd-176e-4b85-ad10-d65e8e4f09a0": {
+      "ProjectGuid": "d11e6bfd-176e-4b85-ad10-d65e8e4f09a0",
+      "DisplayName": "Backend",
+      "ColorIndex": 0
+    },
+    "f893fb6e-808f-4339-88e2-e8f9e9e19bd0": {
+      "ProjectGuid": "f893fb6e-808f-4339-88e2-e8f9e9e19bd0",
+      "DisplayName": "TestBlog",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    },
+    "6001078e-1f11-4a14-809e-a244992c1287": {
+      "ProjectGuid": "6001078e-1f11-4a14-809e-a244992c1287",
+      "DisplayName": "Backend_EF",
+      "ColorIndex": 2
+    },
+    "a59de880-073a-48ae-bcf8-02729ab2ef50": {
+      "ProjectGuid": "a59de880-073a-48ae-bcf8-02729ab2ef50",
+      "DisplayName": "TestProjectBlog",
+      "ColorIndex": 3
+    },
+    "6264e394-2427-4e4e-a075-77a54b03170e": {
+      "ProjectGuid": "6264e394-2427-4e4e-a075-77a54b03170e",
+      "DisplayName": "TestProjectBlog",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}
