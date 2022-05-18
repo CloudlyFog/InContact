@@ -10,9 +10,9 @@ namespace Backend_EF.Controllers
         private readonly ApplicationContext applicationContext;
         private readonly BindContext bindContext;
         private readonly GroupsContext groupsContext;
-        public NewsController(NewsContext context, ApplicationContext applicationContext, BindContext bindContext, GroupsContext groupsContext)
+        public NewsController(NewsContext newsContext, ApplicationContext applicationContext, BindContext bindContext, GroupsContext groupsContext)
         {
-            this.newsContext = context;
+            this.newsContext = newsContext;
             this.applicationContext = applicationContext;
             this.bindContext = bindContext;
             this.groupsContext = groupsContext;
@@ -41,8 +41,8 @@ namespace Backend_EF.Controllers
             if (!applicationContext.IsAuthanticated(newsModel.UserID))
                 return RedirectToAction("Feed");
 
-
-            if (newsContext.IsLike(newsModel.PostID, newsModel.UserID))//here happen adding data in UserNodeLike
+            //here happen adding data in UserNodeLike
+            if (newsContext.IsLike(newsModel.PostID, newsModel.UserID))
             {
                 newsContext.UnLikePost(newsModel);
                 return RedirectToAction("Feed");
